@@ -137,6 +137,9 @@ router.post('/products', async (req, res) =>{
 router.get('/product',(req,res) =>{
  res.render('products')
 });
+router.get('/product',(req,res) =>{
+  res.render('products')
+ });
 
 // export router instance
 export default router;
