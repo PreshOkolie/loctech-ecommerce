@@ -43,6 +43,7 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // remove any previous identification
     res.clearCookie('userId');
     res.clearCookie('super');
 
@@ -122,24 +123,56 @@ router.delete('/product/:productId', async (req, res) => {
   }
 })
 
-router.post('/products', async (req, res) =>{
+router.post('/product', async (req, res) => {  
   const productInfo = req.body;
 
-  try{
+  try {
     await productModel.create(productInfo);
 
-    res.status(200).json({message: "Product added successfully"})
-  }catch(error){
-    res.status(500).json({message: error.message})
+    res.status(200).json({ message: "Product added successfully" })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
   }
-});
+})
 
-router.get('/product',(req,res) =>{
- res.render('products')
-});
-router.get('/product',(req,res) =>{
-  res.render('products')
- });
+// NEW ROUTES START HERE
+router.get('/product/:productId', async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    // fetch the product from the db
+    const product = await productModel.findOne({ _id: new mongoose.Types.ObjectId(productId) });
+
+    if (product === null) {
+      res.status(404).json({ message: "No product found" });
+      return;
+    }
+
+    res.status(200).json({ product })
+
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+router.patch('/product/:productId', async (req, res) => {
+  const { productId } = req.params;
+  const update = req.body;
+  
+  try {
+    // MAKE THE UPDATE
+    await productModel.updateOne(
+      { _id: new mongoose.Types.ObjectId(productId) },
+      { $set: { ...update } }
+    )
+
+    // THE ... is called spread operator, you can look it up on w3schools
+
+    res.status(200).json({ message: "Update successful" })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
 
 // export router instance
 export default router;
