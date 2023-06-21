@@ -24,7 +24,7 @@ async function addProduct() {
   const quantity = document.querySelector("input[name='quantity']").value;
   const img = document.querySelector("input[name='img']").value;
 
-  const resp = await fetch('http://localhost:9000/product', {
+  const resp = await fetch(`${location.origin}/product`, {
     method: 'post',
     headers: {
       'content-type': 'application/json'
@@ -47,7 +47,7 @@ async function addProduct() {
 
 async function updateItemToUpdate(productId) {
   // fetch the product information so I can show it in the form for update
-  const resp = await fetch(`http://localhost:9000/product/${productId}`);
+  const resp = await fetch(`${location.origin}/product/${productId}`);
 
   const data = await resp.json();
 
@@ -64,7 +64,7 @@ async function updateItemToUpdate(productId) {
   const quantity = document.querySelector("input[name='updatedQuantity']").value = data.product.quantity;
 
   // LASTLY UPDATE THE HIDDEN FIELD WITH THE PRODUCT ID
-  const productId = document.querySelector("input[name='productId']").value = productId;
+  document.querySelector("input[name='productId']").value = productId;
 }
 
 async function updateProduct() {
@@ -79,7 +79,7 @@ async function updateProduct() {
   const productId = document.querySelector("input[name='productId']").value;
 
   // MAKE A REQUEST
-  const resp = await fetch(`http://localhost:9000/product/${productId}`, {
+  const resp = await fetch(`${location.origin}/product/${productId}`,  {
     method: 'PATCH',
     headers: {
       'Content-Type': 'Application/json'
