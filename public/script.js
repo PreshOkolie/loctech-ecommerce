@@ -58,13 +58,13 @@ async function updateItemToUpdate(productId) {
 
   // IF IT GETS HERE THE INFORMATION WAS FOUND
   // SO UPDATE THE PRODUCT UPDATE FIELDS
-  document.querySelector("input[name='updatedName']").value = data.product.name;
-  document.querySelector("input[name='updatedImg']").value = data.product.img;
-  document.querySelector("input[name='updatedPrice']").value = data.product.price;
-  document.querySelector("input[name='updatedQuantity']").value = data.product.quantity;
+  const name = document.querySelector("input[name='updatedName']").value = data.product.name;
+  const img = document.querySelector("input[name='updatedImg']").value = data.product.img;
+  const price = document.querySelector("input[name='updatedPrice']").value = data.product.price;
+  const quantity = document.querySelector("input[name='updatedQuantity']").value = data.product.quantity;
 
   // LASTLY UPDATE THE HIDDEN FIELD WITH THE PRODUCT ID
-  document.querySelector("input[name='productId']").value = productId;
+  const productId = document.querySelector("input[name='productId']").value = productId;
 }
 
 async function updateProduct() {
